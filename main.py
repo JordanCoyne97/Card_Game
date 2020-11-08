@@ -1,16 +1,23 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import numpy as np
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def card_count_left_in_deck():
+    return len(deck)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('hi')
+def get_king_count():
+    return np.count_nonzero(deck == 'King')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+values = ['2','3','4','5','6','7','8','9','10','Jack','Queen','King','Ace']
+suites = ['Hearts', 'Clubs', 'Diamonds', 'Spades']
+deck = [[v + ' of ' + s] for s in suites for v in values]
+
+
+def main():
+    while get_king_count() != 0:
+        get_king_count()
+        input = input('Testing')
+
+
+main()
