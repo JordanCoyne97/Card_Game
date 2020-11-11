@@ -20,14 +20,14 @@ class Card:
     def getCard(self):
         return self.no + " of " + self.suit
 
-    def __gt__(self, other):
-        if(self.value > other.value):
+    def __ge__(self, other):
+        if(self.value >= other.value):
             return True
         else:
             return False
 
-    def __lt__(self, other):
-        if(self.value < other.value):
+    def __le__(self, other):
+        if(self.value <= other.value):
             return True
         else:
             return False
