@@ -21,7 +21,7 @@ class Card:
         self.suit = suit
         self.value = self.no
         if(no in picture):
-            self.valuevalue = picture[no]
+            self.value = picture[no]
         self.color = suitColor[suit]
 
 
@@ -113,22 +113,23 @@ def run(deck):
     lowCard = minCard(hand[0], hand[1])
     inOrOut = input("Inside or Outside: ").lower()
 
-    if inOrOut=="ouside"  and ( hand[2] in range(lowCard, highCard) ):
+    if inOrOut=="outside"  and ( hand[2].value in range(lowCard.value, highCard.value) ):
         hand[2].getCard()
         return "Drink"
-    elif inOrOut=="Inside" and  not( hand[2] in range(lowCard, highCard)):
+    elif inOrOut=="Inside" and  not( hand[2].value in range(lowCard.value, highCard.value)):
         hand[2].getCard();
         return "Drink"
 
     hand[2].getCard()
 
     suitGuess = input("Guess the Suit: ").lower()
-    if(suitGuess != hand[3].suit):
+    if(suitGuess != hand[3].suit.lower()):
         hand[3].getCard()
         return "Drink"
 
     hand[3].getCard()
-    print("SUCCESS")
+    return "Success"
+
 
 def main():
     deck = initDeck()
