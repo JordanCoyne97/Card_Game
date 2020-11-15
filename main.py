@@ -8,47 +8,45 @@ picture = {
     "Ace": 14,
 }
 suitColor = {
- 'Hearts': 'red',
- 'Clubs': 'black',
- 'Diamonds': 'red',
- 'Spades':'black'
+    'Hearts': 'red',
+    'Clubs': 'black',
+    'Diamonds': 'red',
+    'Spades': 'black'
 }
 
-class Card:
 
+class Card:
     def __init__(self, no, suit):
         self.no = no
         self.suit = suit
         self.value = self.no
-        if(no in picture):
+        if (no in picture):
             self.value = picture[no]
         self.color = suitColor[suit]
 
-
-
     def getCard(self):
-         print(self.no + " of " + self.suit)
+        print(self.no + " of " + self.suit)
 
     def __ge__(self, other):
-        if(self.value >= other.value):
+        if self.value >= other.value:
             return True
         else:
             return False
 
     def __le__(self, other):
-        if(self.value <= other.value):
+        if self.value <= other.value:
             return True
         else:
             return False
 
     def __gt__(self, other):
-        if(self.value > other.value):
+        if self.value > other.value:
             return True
         else:
             return False
 
     def __lt__(self, other):
-        if(self.value < other.value):
+        if (self.value < other.value):
             return True
         else:
             return False
@@ -62,58 +60,58 @@ def maxCard(card1, card2):
 
 
 def minCard(card1, card2):
-    if card1 <=card2:
+    if card1 <= card2:
         return card1
     else:
         return card2
 
 
 def initDeck():
-    numbers = ['2','3','4','5','6','7','8','9','10','Jack','Queen','King','Ace']
+    numbers = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
     suits = ['Hearts', 'Clubs', 'Diamonds', 'Spades']
     deck = [Card(n, s) for s in suits for n in numbers]
     return deck
 
 
 def run(deck):
-    drinkDuration = random.randint(1,15)
+    drink_duration = random.randint(1, 15)
 
     hand = random.sample(deck, 4)
 
-    redOrBlack = input("Red or Black: ").lower()
-    if(redOrBlack != hand[0].color):
+    red_or_black = input("Red or Black: ").lower()
+    if red_or_black != hand[0].color:
         hand[0].getCard()
-        return "DRINK for " + str(drinkDuration) + " second(s)"
+        return "DRINK for " + str(drink_duration) + " second(s)"
 
     hand[0].getCard()
 
-    highOrLow = input("Higher or Lower: ").lower()
-    if highOrLow == "higher" and hand[0] > hand[1]:
+    high_or_low = input("Higher or Lower: ").lower()
+    if high_or_low == "higher" and hand[0] > hand[1]:
         hand[1].getCard()
-        return "DRINK for " + str(drinkDuration) + " second(s)"
-    elif highOrLow == "lower" and hand[0] < hand[1]:
+        return "DRINK for " + str(drink_duration) + " second(s)"
+    elif high_or_low == "lower" and hand[0] < hand[1]:
         hand[1].getCard()
-        return "DRINK for " + str(drinkDuration) + " second(s)"
+        return "DRINK for " + str(drink_duration) + " second(s)"
 
     hand[1].getCard()
 
-    highCard = maxCard(hand[0], hand[1])
-    lowCard = minCard(hand[0], hand[1])
-    inOrOut = input("Inside or Outside: ").lower()
+    high_card = maxCard(hand[0], hand[1])
+    low_card = minCard(hand[0], hand[1])
+    in_or_out = input("Inside or Outside: ").lower()
 
-    if inOrOut=="outside"  and ( hand[2].value in range(lowCard.value, highCard.value)):
+    if in_or_out == "outside" and (hand[2].value in range(low_card.value, high_card.value)):
         hand[2].getCard()
-        return "DRINK for " + str(drinkDuration) + " second(s)"
-    elif inOrOut=="Inside" and  not( hand[2].value in range(lowCard.value, highCard.value)):
+        return "DRINK for " + str(drink_duration) + " second(s)"
+    elif in_or_out == "inside" and not (hand[2].value in range(low_card.value, high_card.value)):
         hand[2].getCard()
-        return "DRINK for " + str(drinkDuration) + " second(s)"
+        return "DRINK for " + str(drink_duration) + " second(s)"
 
     hand[2].getCard()
 
-    suitGuess = input("Guess the Suit: ").lower()
-    if(suitGuess != hand[3].suit.lower()):
+    suit_guess = input("Guess the Suit: ").lower()
+    if suit_guess != hand[3].suit.lower():
         hand[3].getCard()
-        return "DRINK for " + str(drinkDuration) + " second(s)"
+        return "DRINK for " + str(drink_duration) + " second(s)"
 
     hand[3].getCard()
     return "Success"
