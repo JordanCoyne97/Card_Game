@@ -53,36 +53,19 @@ class Card:
         else:
             return False
 
+
 def maxCard(card1, card2):
     if card1 >= card2:
         return card1
     else:
         return card2
+
+
 def minCard(card1, card2):
     if card1 <=card2:
         return card1
     else:
         return card2
-
-
-
-
-# def card_count_left_in_deck():
-#     return len(deck)
-#
-#
-# def get_king_count():
-#     counter = 0
-#
-#     for card in deck:
-#         if card == 'King of Hearts' or card == 'King of Spades' or card == 'King of Diamonds' or card == 'King of Clubs':
-#             counter = counter + 1
-#             print('found')
-#
-#     if 'King of Hearts' in deck:
-#         counter = counter + 1
-#
-#     return counter
 
 
 def initDeck():
@@ -131,20 +114,22 @@ def run(deck):
     return "Success"
 
 
-def main():
+def play_round():
     deck = initDeck()
-    # while get_king_count() != 0:
-    #     get_king_count()
-    #     input = input('Testing')
-    # for card in deck:
-    #     print(card.getCard())
 
-    #test inequality
-    # if(deck[10] >= deck[9]):
-    #     print("Hit")
-
-    # print(deck[10].color)
     result = run(deck)
     print(result)
+    main()
+
+
+def main():
+    choice = input("play another round? y/n: ")
+    print("Starting game ...\n")
+
+    if choice == "y":
+        play_round()
+    else:
+        return
+
 
 main()
