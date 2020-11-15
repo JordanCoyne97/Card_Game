@@ -76,19 +76,24 @@ def initDeck():
 
 
 def run(deck):
+    drinkDuration = random.randint(1,15)
+
     hand = random.sample(deck, 4)
 
     redOrBlack = input("Red or Black: ").lower()
     if(redOrBlack != hand[0].color):
         hand[0].getCard()
-        return "DRINK"
+        return "DRINK for " + str(drinkDuration) + " second(s)"
 
     hand[0].getCard()
 
     highOrLow = input("Higher or Lower: ").lower()
-    if (highOrLow=="higher" and hand[0] > hand[1]) or (highOrLow =="lower" and hand[0] < hand[1]):
+    if highOrLow == "higher" and hand[0] > hand[1]:
         hand[1].getCard()
-        return "Drink"
+        return "DRINK for " + str(drinkDuration) + " second(s)"
+    elif highOrLow == "lower" and hand[0] < hand[1]:
+        hand[1].getCard()
+        return "DRINK for " + str(drinkDuration) + " second(s)"
 
     hand[1].getCard()
 
@@ -96,19 +101,19 @@ def run(deck):
     lowCard = minCard(hand[0], hand[1])
     inOrOut = input("Inside or Outside: ").lower()
 
-    if inOrOut=="outside"  and ( hand[2].value in range(lowCard.value, highCard.value) ):
+    if inOrOut=="outside"  and ( hand[2].value in range(lowCard.value, highCard.value)):
         hand[2].getCard()
-        return "Drink"
+        return "DRINK for " + str(drinkDuration) + " second(s)"
     elif inOrOut=="Inside" and  not( hand[2].value in range(lowCard.value, highCard.value)):
-        hand[2].getCard();
-        return "Drink"
+        hand[2].getCard()
+        return "DRINK for " + str(drinkDuration) + " second(s)"
 
     hand[2].getCard()
 
     suitGuess = input("Guess the Suit: ").lower()
     if(suitGuess != hand[3].suit.lower()):
         hand[3].getCard()
-        return "Drink"
+        return "DRINK for " + str(drinkDuration) + " second(s)"
 
     hand[3].getCard()
     return "Success"
