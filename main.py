@@ -75,24 +75,23 @@ def initDeck():
 
 def run(deck):
     drink_duration = random.randint(1, 15)
-
     hand = random.sample(deck, 4)
 
     red_or_black = input("Red or Black: ").lower()
+
     if red_or_black != hand[0].color:
         hand[0].getCard()
         return "DRINK for " + str(drink_duration) + " second(s)"
-
     hand[0].getCard()
 
     high_or_low = input("Higher or Lower: ").lower()
+
     if high_or_low == "higher" and hand[0] > hand[1]:
         hand[1].getCard()
         return "DRINK for " + str(drink_duration) + " second(s)"
     elif high_or_low == "lower" and hand[0] < hand[1]:
         hand[1].getCard()
         return "DRINK for " + str(drink_duration) + " second(s)"
-
     hand[1].getCard()
 
     high_card = maxCard(hand[0], hand[1])
@@ -107,13 +106,13 @@ def run(deck):
         return "DRINK for " + str(drink_duration) + " second(s)"
 
     hand[2].getCard()
-
     suit_guess = input("Guess the Suit: ").lower()
+    
     if suit_guess != hand[3].suit.lower():
         hand[3].getCard()
         return "DRINK for " + str(drink_duration) + " second(s)"
-
     hand[3].getCard()
+
     return "Success"
 
 
