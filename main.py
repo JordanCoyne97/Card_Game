@@ -14,6 +14,13 @@ suitColor = {
  'Spades':'black'
 }
 
+class Player:
+    def __init__(self, hand, name, drinkAmt = 0):
+        self.hand = hand
+        self.name = name
+        self.drinkAmt = drinkAmt
+
+
 class Card:
 
     def __init__(self, no, suit):
@@ -91,21 +98,32 @@ def initDeck():
     deck = [Card(n, s) for s in suits for n in numbers]
     return deck
 
+def deal(deck, count):
+    hand = []
+    for i in range(count):
+        index = random.randint(0,len(deck)-1)
+        hand.append(deck.pop(index))
 
-def run(deck):
-    hand = random.sample(deck, 4)
+    return hand
+
+
+
+
+def run(hand):
 
     redOrBlack = input("Red or Black: ").lower()
     if(redOrBlack != hand[0].color):
         hand[0].getCard()
-        return "DRINK"
+        amt = random.randint(2,7)
+        return "DRINK"+ str(amt) + "seconds"
 
     hand[0].getCard()
 
     highOrLow = input("Higher or Lower: ").lower()
     if (highOrLow=="higher" and hand[0] > hand[1]) or (highOrLow =="lower" and hand[0] < hand[1]):
         hand[1].getCard()
-        return "Drink"
+        amt = random.randint(2,7)
+        return "DRINK"+ str(amt) + "seconds"
 
     hand[1].getCard()
 
@@ -115,36 +133,66 @@ def run(deck):
 
     if inOrOut=="outside"  and ( hand[2].value in range(lowCard.value, highCard.value) ):
         hand[2].getCard()
-        return "Drink"
+        amt = random.randint(2,7)
+        return "DRINK"+ str(amt) + "seconds"
     elif inOrOut=="Inside" and  not( hand[2].value in range(lowCard.value, highCard.value)):
         hand[2].getCard();
-        return "Drink"
+        amt = random.randint(2,7)
+        return "DRINK"+ str(amt) + "seconds"
 
     hand[2].getCard()
 
     suitGuess = input("Guess the Suit: ").lower()
     if(suitGuess != hand[3].suit.lower()):
         hand[3].getCard()
-        return "Drink"
+        amt = random.randint(7,12)
+        return "DRINK"+ str(amt) + "seconds"
 
     hand[3].getCard()
-    return "Success"
+    amt = random.randint(2,7)
+    return "SUCCESS: Give"+ str(amt) + "seconds to somebody"
 
+def pyramid(deck, players):
+    rows = []
+    for cardCount in range(1,5):
+        rows.append(random.sample(deck, cardCount))
+
+    rowDrinkAmt = 0
+    for row in rows:
+        rowDrinkAmt += 5
+        for player in players:
+            player.drinkAmt += cardMatch(row, player.hand) * rowDrinkAmt
+
+##card match also removes cards from hands
+##we can use set intersetcion becuase cards are unique
+def cardMatch(row, hand):
+
+    rowVal = [card.value for card in row]
+    handVal = [card.value for card in hand]
+
+    intersect = list(set(rowVal) & set(handVal))
+
+    ## Hand becomes hand/(intersection(hand,Row))
+    hand = [card for card in row if card.value not in handVal]
+
+    return len(intersect)
 
 def main():
+
+
     deck = initDeck()
-    # while get_king_count() != 0:
-    #     get_king_count()
-    #     input = input('Testing')
-    # for card in deck:
-    #     print(card.getCard())
 
-    #test inequality
-    # if(deck[10] >= deck[9]):
-    #     print("Hit")
+    names = ["Tommy","Sillian","d'Oisin"]
+    players = []
+    for i in names:
+        hand = deal(deck, 4)
+        players.append( Player( hand, i ) )
 
-    # print(deck[10].color)
-    result = run(deck)
-    print(result)
+    pyramid(deck, players)
+
+    for player in players:
+        print(player.name + ": " + str(player.drinkAmt))
+
+    
 
 main()
